@@ -6,7 +6,7 @@ const fs = require('fs');
 
 async function main() {
   const endpoint = 'https://www.severeweatheroutlook.com/';
-  const file = 'test.json';
+  const file = 'lib/data/test.json';
 
   await axios.get(endpoint).then((urlResponse: { data: any; }) => {
     const $ = cheerio.load(urlResponse.data);
@@ -15,7 +15,7 @@ async function main() {
       link: any;
     }[] = [];
 
-    $('div.container div:nth-child(5)').each(function (i: number, elem: any) {
+    $('.container .row').each(function (i: number, elem: any) {
       data[i - 1] = {
         date: $(elem).find('div:nth-child(1) > strong').text().trim(),
         link: $(elem).find('div:nth-child(1) > a').attr('href'),
