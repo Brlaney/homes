@@ -1,5 +1,9 @@
 # Severe Weather Outlook (US)
 
+## Overview
+
+This is a Node.js project written in Typescript that fetches United States severe weather outlook data from this website: [severeweatheroutlook.com](https://www.severeweatheroutlook.com/). The websites data is ultimately sourced directly from [NOAA's](https://www.spc.noaa.gov/) (National Oceanic and Atmospheric Administration)
+
 ## Scripts to run:
 
 ```bash
