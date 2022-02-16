@@ -2,33 +2,42 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
-const { LINK_2 } = require('./lib/endpoints');
+// const { BASE_URL } = require('../lib/endpoints');
 
-async function obtainPage(num) {
-  const base = LINK_2;
+async function main() {
+  const endpoint = 'https://www.severeweatheroutlook.com/';
+  const file = 'test.json';
 
-  let endpoint = base + num;
-  const file = 'test/pg' + num + '.json';
-
-  await axios.get(endpoint).then(urlResponse => {
+  await axios.get(endpoint).then((urlResponse: { data: any; }) => {
     const $ = cheerio.load(urlResponse.data);
-    let data = [];
+    let data: {
+      date: any;
+      link: any;
+    }[] = [];
 
-    $('.table tr').each(function (i, elem) {
+    $('div.container div:nth-child(5)').each(function (i: number, elem: any) {
       data[i - 1] = {
-        date: $(elem).find('td:nth-child(1)').text().trim(),
-        title: $(elem).find('td:nth-child(3)').text().trim(),
-        link: $(elem).find('td:nth-child(3) > a').attr('href'),
-        bpr: $(elem).find('td:nth-child(4)').text().trim(),
-        attorney: $(elem).find('td:nth-child(5)').text().trim(),
+        date: $(elem).find('div:nth-child(1) > strong').text().trim(),
+        link: $(elem).find('div:nth-child(1) > a').attr('href'),
       }
     });
 
     // Write data into json file
     fs.writeFile(file,
       JSON.stringify(data, null, 4),
-      () => console.log('File for pg number ' + num + ' successfully saved.'))
+      () => console.log('Data successfully saved.'))
   })
 }
 
-obtainPage(1);
+main();
+
+// body > div.container > div:nth-child(5) > div:nth-child(1) > strong
+// body > div.container > div:nth-child(5) > div:nth-child(2) > strong
+// body > div.container > div:nth-child(5) > div:nth-child(3) > strong
+// body > div.container > div:nth-child(5) > div:nth-child(4) > strong
+// body > div.container > div:nth-child(5) > div:nth-child(5) > strong
+// body > div.container > div:nth-child(5) > div:nth-child(6) > strong
+// body > div.container > div:nth-child(5) > div:nth-child(7) > strong
+// body > div.container > div: nth - child(5) > div: nth - child(8) > strong
+
+// body > div.container > div:nth-child(5) > div:nth-child(1) > a
