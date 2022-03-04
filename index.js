@@ -55,17 +55,13 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
       console.log('\nThe number of homes listed \nfor sale has increased by: ' + diff);
     }
 
-    // data[0] = {
-    //   total: parseInt(total),
-    //   date: todaysDate
-    // };
-
+    // Contains new data + old data
     data = [
       { total: parseInt(total), date: todaysDate },
       ...obj
     ];
 
-    // Append data into json file
+    // Re-write data to json file
     fs.writeFile('lib/data/total.json',
       JSON.stringify(data, null, 2),
       () => console.log(

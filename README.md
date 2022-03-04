@@ -48,18 +48,6 @@ Most accurate predictions can be found from current date to 1, 2, and 3 days out
 
 </br>
 
-## References and resources
-
-- Great introduction video by [Dr. Structure](https://youtu.be/kFkU1M7xVbg)
-- Wikipedia:
-  - [Direct Stiffness Method](https://en.wikipedia.org/wiki/Direct_stiffness_method)
-  - [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method)
-  - [Newtonian Mechanics](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
-  - [Structural Analysis](https://en.wikipedia.org/wiki/Structural_analysis)
-- [ABET](https://www.abet.org/)
-
-</br>
-
 ## License
 
 ```text
