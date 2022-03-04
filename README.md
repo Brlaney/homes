@@ -4,6 +4,13 @@
 
 This is a Node.js project written in Typescript that fetches United States severe weather outlook data from this website: [severeweatheroutlook.com](https://www.severeweatheroutlook.com/). The websites data is ultimately sourced directly from [NOAA's](https://www.spc.noaa.gov/) (National Oceanic and Atmospheric Administration)
 
+```jsx
+ // If you do not use StealthPlugin(), then implement the following:
+await page.mouse.click(392, 271, { delay: 10000 });
+await page.waitFor(2000);
+
+```
+
 ## Scripts to run:
 
 ```bash
