@@ -8,6 +8,7 @@ var obj = require('./lib/data/total.json');
 
 puppeteer.use(StealthPlugin()); // Enable stealth plugin
 
+// Immediately-invoked anon. async function
 (async () => {
   // Chromium browser (default)
   const browser = await puppeteer.launch({
@@ -35,15 +36,16 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
   await elements[0].click();
   await page.waitFor(2000); // 2 second delay
 
+  // Define & wait for total no. of homes selector
   const total_selector = '.category-options > button.active-option > .total-text';
-
   await page.waitForSelector(total_selector);
 
   const total = await page.$eval(total_selector, e => e.innerHTML);
+  // console.log(total) // Test the output is a number
 
-  console.log(total)
-
-  if (obj[0].total < total || total < obj[0].total) {
+  // Conditional: if totals are not equal, then -->
+  // ADD ABSOLUTE VALUE HERE
+  if (obj[0].total != total) {
     var diff = total - obj.total;
 
     if (diff < 0) {
@@ -53,13 +55,18 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
       console.log('\nThe number of homes listed \nfor sale has increased by: ' + diff);
     }
 
-    data = {
-      total: parseInt(total),
-      date: todaysDate
-    };
+    // data[0] = {
+    //   total: parseInt(total),
+    //   date: todaysDate
+    // };
+
+    data = [
+      { total: parseInt(total), date: todaysDate },
+      ...obj
+    ];
 
     // Append data into json file
-    fs.appendFile('lib/data/total.json',
+    fs.writeFile('lib/data/total.json',
       JSON.stringify(data, null, 2),
       () => console.log(
         'Test data was successfully saved in lib/data'
@@ -67,7 +74,6 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
     );
 
   } else {
-
     // Display that the number of listings has not changed
     console.log('\nThe number of homes listed for sale by real \nestate agents is unchanged.No data was saved.')
   };
