@@ -11,6 +11,28 @@ await page.waitFor(2000);
 
 ```
 
+</br>
+
+```jsx
+/*
+Contained within: div.#grid-search-results > ul.photo-cards photo-cards_wow photo-cards_short photo-cards_extra-attribution
+Fetch the following data:
+  
+  Page 2:
+  https://www.zillow.com/cookeville-tn/2_p
+
+  Page 3:
+  https://www.zillow.com/cookeville-tn/3_p
+
+  Page n: 
+  https://www.zillow.com/cookeville-tn/n_p
+*/
+
+// await page.screenshot({ path: './lib/screenshots/test.png' })
+```
+
+</br>
+
 ## Scripts to run:
 
 ```bash
