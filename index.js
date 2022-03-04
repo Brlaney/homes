@@ -20,9 +20,6 @@ const puppeteer = require('puppeteer');
   await page.keyboard.press('Enter', { delayed: 10 });
 
   await page.waitFor(5000);
-  
-
-  
   await page.screenshot({ path: 'amazing.png' })
 
 })();
