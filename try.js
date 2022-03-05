@@ -1,5 +1,5 @@
 
-// getListings.js
+// getListings.js variation no. 1
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const puppeteer = require('puppeteer-extra');
 puppeteer.use(StealthPlugin()); // Enable stealth plugin
@@ -7,7 +7,6 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
-
 
 (async () => {
   // Chromium browser (default)
@@ -17,16 +16,14 @@ const sleep = (milliseconds) => {
   });
   const page = await browser.newPage();
   data = [];
-
-  var i = 0; // Iterator
+  let i = 0;
 
   await page.goto('https://www.zillow.com/homes/for_sale/Cookeville,-TN_rb/', {
     waitUntil: 'load'
   });
 
-
   const listings = await page.$$(
-    'ul.photo-cards.photo-cards_wow.photo-cards_short.photo-cards_extra-attribution > li > article.list-card.list-card-additional-attribution.list-card-additional-attribution-space.list-card_not-saved',
+    'div.result-list-container > ul.photo-cards.photo-cards_wow.photo-cards_short.photo-cards_extra-attribution > li',
   );
 
   for (const listing of listings) {
@@ -34,11 +31,6 @@ const sleep = (milliseconds) => {
     let link = 'Null';
     let realtor = 'Null';
     let price = 'Null';
-    let nbeds = 'Null';
-    let nbaths = 'Null';
-    let sqFt = 'Null';
-    let listType = 'Null';
-    let nListed = 'Null';
 
     console.log(i);
 
@@ -77,55 +69,13 @@ const sleep = (milliseconds) => {
       );
       console.log(price) // Test the output
     } catch (error) { }
-
-    // No. of bedrooms
-    try {
-      nbeds = await page.evaluate(
-        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li:nth-child(1)').textContent,
-        listing
-      );
-      console.log(nbeds) // Test the output
-    } catch (error) { }
-
-    // No. of baths
-    try {
-      nbaths = await page.evaluate(
-        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li:nth-child(2)').textContent,
-        listing
-      );
-      console.log(nbaths) // Test the output
-    } catch (error) { }
-
-    // Square feet
-    try {
-      sqFt = await page.evaluate(
-        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li:nth-child(3)').textContent,
-        listing
-      );
-      console.log(sqFt) // Test the output
-    } catch (error) { }
-
-    // Listing type
-    try {
-      listType = await page.evaluate(
-        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li.list-card-statusText').textContent,
-        listing
-      );
-      console.log(listType) // Test the output
-    } catch (error) { }
-
-    // Days (time) listed on Zillow
-    try {
-      nListed = await page.evaluate(
-        (el) => el.querySelector('div.list-card-top > div').textContent,
-        listing
-      );
-      console.log(nListed) // Test the output
-    } catch (error) { }
-
+    
     sleep(2000);
     i++;
   }
 
   await browser.close(); // Ends Chromium instance
 })();
+
+
+
