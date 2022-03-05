@@ -29,6 +29,12 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
   await page.waitForSelector(total_selector);
   const total = await page.$eval(total_selector, e => e.innerHTML);
 
+  const card_selector = '//*[@id="grid-search-results"]/ul/li[1]/script/text()';
+  await page.waitForXPath(card_selector);
+  const card = await page.$x(card_selector);
+  // const card = await page.$x(card_selector, e => e.innerHTML);
+
+
   /*
     Page 1.
     //*[@id="grid-search-results"]/ul/li[1]/script/text(),
@@ -56,7 +62,7 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
 
     div .search-pagination
       nav
-        
+
 
   */
 
