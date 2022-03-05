@@ -1,3 +1,14 @@
+In order to use datetime custom function: 
+// const GetDate = require('./lib/utils/GetDate');
+// Get todays date (custom function)
+// currentDateTime = GetDate.obtainDate();
+
+
+// IMPORTANT!
+// await page.waitForSelector('[type="application/ld+json"]');
+// #grid-search-results > ul > li:nth-child(41)
+
+
 // Contains new data + old data
   /*
   data = [{
@@ -14,3 +25,43 @@
     )
   );
 */
+
+
+/*
+  Page 1.
+  //*[@id="grid-search-results"]/ul/li[1]/script/text(),
+  //*[@id="grid-search-results"]/ul/li[2]/script/text(), ...
+  //*[@id="grid-search-results"]/ul/li[41]/script/text()
+
+
+  Page 2.
+  //*[@id="grid-search-results"]/ul/li[1]/script/text(), ...
+  //*[@id="grid-search-results"]/ul/li[41]/script/text()
+
+
+  Page 3.
+  //*[@id="grid-search-results"]/ul/li[11]/script/text(), ...
+  //*[@id="grid-search-results"]/ul/li[41]/script/text()
+
+
+  Page 7.
+  //*[@id="grid-search-results"]/ul/li[1]/script/text(), ...
+  //*[@id="grid-search-results"]/ul/li[14]/script/text()
+
+
+  div #grid-search-results .result-list-container
+    #grid-search-results > ul.photo-cards photo-cards_wow photo-cards_short photo-cards_extra-attribution
+
+  div .search-pagination
+    nav
+*/
+
+// THIS WORKS!
+const card_selector = 'li > article > .list-card-info';
+await page.waitForSelector(card_selector);
+const card = await page.$eval(card_selector, e => e.innerHTML);
+
+// const card_selector = 'li > article > .list-card-info';
+// await page.waitForSelector(card_selector);
+// const card = await page.$eval(card_selector, e => e.innerHTML);
+// console.log(card);

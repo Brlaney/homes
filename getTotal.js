@@ -60,4 +60,5 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
     )
   );
 
+  await browser.close(); // Ends Chromium instance
 })();

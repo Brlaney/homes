@@ -1,13 +1,14 @@
 
-// try.js
+// getListings.js
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const GetDate = require('./lib/utils/GetDate');
 const puppeteer = require('puppeteer-extra');
-const fs = require('fs');
-
 puppeteer.use(StealthPlugin()); // Enable stealth plugin
 
-// Immediately-invoked anon. async function
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
+
 (async () => {
   // Chromium browser (default)
   const browser = await puppeteer.launch({
@@ -21,46 +22,103 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
     waitUntil: 'load'
   });
 
-  // Get todays date (custom function)
-  currentDateTime = GetDate.obtainDate();
 
-  const card_selector = '#grid-search-results';
-  await page.waitForSelector(card_selector);
-  // const card = await page.$x(card_selector);
-  const card = await page.$eval(card_selector, e => e.innerHTML);
+  const listings = await page.$$(
+    'ul.photo-cards.photo-cards_wow.photo-cards_short.photo-cards_extra-attribution > li > article.list-card.list-card-additional-attribution.list-card-additional-attribution-space.list-card_not-saved',
+  );
 
-  console.log(card);
+  for (const listing of listings) {
+    let address = 'Null';
+    let link = 'Null';
+    let realtor = 'Null';
+    let price = 'Null';
+    let nbeds = 'Null';
+    let nbaths = 'Null';
+    let sqFt = 'Null';
+    let listType = 'Null';
+    let nListed = 'Null';
 
-  /*
-    Page 1.
-    //*[@id="grid-search-results"]/ul/li[1]/script/text(),
-    //*[@id="grid-search-results"]/ul/li[2]/script/text(), ...
-    //*[@id="grid-search-results"]/ul/li[41]/script/text()
+    // Address
+    try {
+      address = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > a > address.list-card-addr').textContent,
+        listing
+      );
+      console.log('\n' + address) // Test the output
+    } catch (error) { }
 
+    // Link
+    try {
+      link = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > a').getAttribute('href'),
+        listing
+      );
+      console.log(link) // Test the output
+    } catch (error) { }
 
-    Page 2.
-    //*[@id="grid-search-results"]/ul/li[1]/script/text(), ...
-    //*[@id="grid-search-results"]/ul/li[41]/script/text()
+    // Realtor/firm
+    try {
+      realtor = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > div.list-card-footer > p').textContent,
+        listing
+      );
+      console.log(realtor) // Test the output
+    } catch (error) { }
 
+    // Price
+    try {
+      price = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > div.list-card-heading > div.list-card-price').textContent,
+        listing
+      );
+      console.log(price) // Test the output
+    } catch (error) { }
 
-    Page 3.
-    //*[@id="grid-search-results"]/ul/li[11]/script/text(), ...
-    //*[@id="grid-search-results"]/ul/li[41]/script/text()
+    // No. of bedrooms
+    try {
+      nbeds = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li:nth-child(1)').textContent,
+        listing
+      );
+      console.log(nbeds) // Test the output
+    } catch (error) { }
 
+    // No. of baths
+    try {
+      nbaths = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li:nth-child(2)').textContent,
+        listing
+      );
+      console.log(nbaths) // Test the output
+    } catch (error) { }
 
-    Page 7.
-    //*[@id="grid-search-results"]/ul/li[1]/script/text(), ...
-    //*[@id="grid-search-results"]/ul/li[14]/script/text()
+    // Square feet
+    try {
+      sqFt = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li:nth-child(3)').textContent,
+        listing
+      );
+      console.log(sqFt) // Test the output
+    } catch (error) { }
 
+    // Listing type
+    try {
+      listType = await page.evaluate(
+        (el) => el.querySelector('div.list-card-info > div.list-card-heading > ul.list-card-details > li.list-card-statusText').textContent,
+        listing
+      );
+      console.log(listType) // Test the output
+    } catch (error) { }
 
-    div #grid-search-results .result-list-container
-      #grid-search-results > ul.photo-cards photo-cards_wow photo-cards_short photo-cards_extra-attribution
+    // Days (time) listed on Zillow
+    try {
+      nListed = await page.evaluate(
+        (el) => el.querySelector('div.list-card-top > div').textContent,
+        listing
+      );
+      console.log(nListed) // Test the output
+    } catch (error) { }
+  }
 
-    div .search-pagination
-      nav
-
-
-  */
-
-
+  await browser.close(); // Ends Chromium instance
 })();
