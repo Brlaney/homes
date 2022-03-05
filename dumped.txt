@@ -1,0 +1,16 @@
+// Contains new data + old data
+  /*
+  data = [{
+    total: parseInt(total),
+    date: currentDateTime[0],
+    time: currentDateTime[1]
+  }, ...obj];
+
+  // Re-write data to json file
+  fs.writeFile('lib/data/total.json',
+    JSON.stringify(data, null, 2),
+    () => console.log(
+      '\nThe data was successfully saved in lib/data'
+    )
+  );
+*/

@@ -4,6 +4,32 @@
 
 This is a Node.js project written in Typescript that fetches United States severe weather outlook data from this website: [severeweatheroutlook.com](https://www.severeweatheroutlook.com/). The websites data is ultimately sourced directly from [NOAA's](https://www.spc.noaa.gov/) (National Oceanic and Atmospheric Administration)
 
+</br>
+
+## Goal data fields ofr each listing:
+
+- [] Days listed on Zillow.com
+- [] The price $$
+- [] No. of beds
+- [] No. of baths
+- [] Square ft
+- [] Det. if it is: 'Home', 'Lot/Lond', or 'New Construction'
+- [] Address
+  - [] Street
+  - [] City
+  - [] State
+  - [] Zip
+
+</br>
+
+Cookeville, TN has a UTC/GMT offset of: `-6 hours`
+
+For example:
+
+Todays date: `03/04/2022`
+Nows timestamp: `17:46:26`
+Raw timestamp: `2022-03-04T23:46:26.819Z`
+
 ```jsx
  // If you do not use StealthPlugin(), then implement the following:
 await page.mouse.click(392, 271, { delay: 10000 });

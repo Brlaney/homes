@@ -1,12 +1,13 @@
-// src/index.ts
+// index.ts
+// NOTE: This script unecessarily goes to zillows homepage then bypasses their automated Chromium defenses
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const GetDate = require('./lib/utils/GetDate');
 const puppeteer = require('puppeteer-extra');
 const fs = require('fs');
 
 var obj = require('./lib/data/total.json');
-
 puppeteer.use(StealthPlugin()); // Enable stealth plugin
+
 
 // Immediately-invoked anon. async function
 (async () => {
@@ -23,7 +24,7 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
   });
 
   // Get todays date (custom function)
-  todaysDate = GetDate.obtainDate();
+  currentDateTime = GetDate.obtainDate();
 
   // Click search input, type location, press enter
   await page.click('#search-box-input');
@@ -56,10 +57,11 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
     }
 
     // Contains new data + old data
-    data = [
-      { total: parseInt(total), date: todaysDate },
-      ...obj
-    ];
+    data = [{
+      total: parseInt(total),
+      date: currentDateTime[0],
+      time: currentDateTime[1]
+    }, ...obj];
 
     // Re-write data to json file
     fs.writeFile('lib/data/total.json',
