@@ -13,10 +13,12 @@ const sleep = (milliseconds) => {
   // Chromium browser (default)
   const browser = await puppeteer.launch({
     headless: false,   // In order to view the automated browser 
-    slowMo: 30         // Simulate human typing by using slowMo
+    slowMo: 60         // Simulate human typing by using slowMo
   });
   const page = await browser.newPage();
   data = [];
+
+  var i = 0; // Iterator
 
   await page.goto('https://www.zillow.com/homes/for_sale/Cookeville,-TN_rb/', {
     waitUntil: 'load'
@@ -37,6 +39,8 @@ const sleep = (milliseconds) => {
     let sqFt = 'Null';
     let listType = 'Null';
     let nListed = 'Null';
+
+    console.log(i);
 
     // Address
     try {
@@ -118,6 +122,8 @@ const sleep = (milliseconds) => {
       );
       console.log(nListed) // Test the output
     } catch (error) { }
+
+    i++;
   }
 
   await browser.close(); // Ends Chromium instance
