@@ -1,4 +1,3 @@
-
 // getTotal.js
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const GetDate = require('./lib/utils/GetDate');
@@ -56,7 +55,7 @@ puppeteer.use(StealthPlugin()); // Enable stealth plugin
   fs.writeFile('lib/data/total.json',
     JSON.stringify(data, null, 2),
     () => console.log(
-      '\nThe data was successfully saved in lib/data'
+      'The data was successfully saved in lib/data'
     )
   );
 
