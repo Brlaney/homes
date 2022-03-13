@@ -6,7 +6,7 @@ This is a Node.js project written in Typescript that fetches United States sever
 
 </br>
 
-## Goal data fields ofr each listing:
+## Data fields to obtain for each listing
 
 [] Days listed on Zillow.com
 [] The price $$
