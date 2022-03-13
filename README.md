@@ -8,17 +8,17 @@ This is a Node.js project written in Typescript that fetches United States sever
 
 ## Goal data fields ofr each listing:
 
-- [] Days listed on Zillow.com
-- [] The price $$
-- [] No. of beds
-- [] No. of baths
-- [] Square ft
-- [] Det. if it is: 'Home', 'Lot/Lond', or 'New Construction'
-- [] Address
-  - [] Street
-  - [] City
-  - [] State
-  - [] Zip
+[] Days listed on Zillow.com
+[] The price $$
+[] No. of beds
+[] No. of baths
+[] Square ft
+[] Det. if it is: 'Home', 'Lot/Lond', or 'New Construction'
+[] Address
+  [] Street
+  [] City
+  [] State
+  [] Zip
 
 </br>
 
